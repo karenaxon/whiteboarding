@@ -1,0 +1,207 @@
+Question #1: Turning Strings to URLs
+URLs cannot have spaces. Instead, all spaces in a string are replaced with %20. Write an algorithm that replaces all spaces in a string with %20. You may not use the replace() method or regular expressions to solve this problem. Solve the problem with and without recursion.
+Example
+const input = "Jasmine Ann Jones" Output: "Jasmine%20Ann%20Jones"
+
+
+NON RECURSIVE
+function convertToURL(str){
+  let strArr = str.split(" ");
+  let returnStr = strArr.join("%20");
+  return returnStr;
+}
+convertToURL(input);
+
+
+RECURSIVE
+function convertToURL(str, returnStr = ""){
+  const add = "%20";
+
+  if(str.length === 0){
+    return returnStr;
+  }
+  if(str.charAt(0) === " "){
+    returnStr += add;
+    return convertToURL(str.substring(1, str.length), returnStr);
+  }
+  else{
+    returnStr += str.charAt(0);
+    return convertToURL(str.substring(1, str.length), returnStr);
+  }
+  return returnStr;
+}
+convertToURL(input);
+
+
+___________________________________________________
+
+
+
+Question #2: Array Deduping
+Write an algorithm that removes duplicates from an array. Do not use a function like filter() to solve this. Once you have solved the problem, demonstrate how it can be solved with filter(). Solve the problem with and without recursion.
+
+Example
+const input = [7, 9, "hi", 12, "hi" 7, 53] Output: [7, 9, "hi", 12, 53]
+
+
+NON RECURSIVE
+function removeDuplicates(arr){
+  for(let i = 0; i < arr.length; i++){
+    for(let j = i + 1; j < arr.length + 1; j++){
+        if(arr[i] === arr[j]){
+          arr.splice(j, 1);
+        }
+      } 
+  }
+  return arr;
+}
+removeDuplicates(input);
+
+
+RECURSIVE
+function removeDuplicates(arr, returnArr = []){
+  let element = arr[arr.length - 1];
+  arr.pop();
+  checkAgainst = arr; 
+
+  if(arr.length === 0){
+    returnArr.push(element);
+    return returnArr;
+  }
+  
+  if(checkAgainst.includes(element)){
+    return removeDuplicates(arr, returnArr);
+  }else{
+    returnArr.push(element);
+    return removeDuplicates(arr, returnArr);
+  }
+  return returnArr;
+}
+removeDuplicates(input);
+
+
+WITH FILTER
+function removeDuplicates(input){
+  let returnArr = input.filter((element, index) => {
+    return input.indexOf(element) === index;
+  })
+  return returnArr; 
+}
+removeDuplicates(input);
+
+
+___________________________________________________
+
+
+
+Question #3: Compressing Strings
+Write an algorithm that takes a string with repeated characters and compresses them, using a number to show how many times the repeated character has been compressed. For instance, aaa would be written as 3a. Solve the problem with and without recursion.
+
+Example
+const input = "aaabccdddda" Output: "3ab2c4da"
+
+
+NON RECURSIVE
+function compress(str){
+  let count = 1;
+  returnStr = "";
+  for(let i= 0; i < str.length; i++){
+    console.log("i: " + i);
+    console.log("letter: " + str[i]);
+    if(str[i] === str[i + 1]){
+      console.log("count: " + count);
+      count++;
+    } else{
+      if (count > 1){
+        returnStr += count + str[i];
+        count = 1;
+      }else{
+        returnStr += str[i];
+        count = 1;
+      }
+    } 
+  }
+  return returnStr;
+}
+compress(input);
+
+
+RECURSIVE
+function compress(str, i = 0, count = 1, returnStr = ""){
+  if (str.length === i) {
+    return returnStr;
+  }
+  if (str[i] === str[i + 1]) {
+    count++;
+  } else {
+    if (count === 1) {
+      returnStr += str[i];
+    } else {
+      returnStr += count + str[i]
+    }
+    count = 1;
+  }
+  return compress(str, ++i, count, returnStr);
+}
+compress(input);
+
+
+___________________________________________________
+
+
+
+Question #4: Checking for Uniqueness
+Write an algorithm that determines whether all the elements in a string are unique. You may not convert the string into an array or use array methods to solve this problem. The algorithm should return a boolean.
+
+Example
+const input1 = "hello" Output: false
+const input2: "copyright Output: true
+
+
+NON RECURSIVE:
+function isUnique(str){
+  for(let i = 0; i < str.length; i++){
+    let checkAgainst = str.substring(1, str.length - 1);
+    if(checkAgainst.includes(str[i])){
+      return false;
+    }
+  }
+  return true;
+}
+isUnique(input1);
+
+
+___________________________________________________
+
+Question #5: Array Sorting
+Write an algorithm that sorts an array without using the sort() method. There are many different sorting algorithms - take the time to read about the following:
+Quick sort
+Merge sort
+Heap sort
+Insertion sort
+Bubble sort
+Selection sort
+You may implement any of the above algorithms (or your own) to solve the problem - as long as it doesn't use sort().
+Example
+const input = [9, 2, 7, 12] Output: [2, 7, 9, 12]
+
+
+NON RECURSIVE:
+function sortArray(array) {
+  let temp = 0;
+  for (let i = 0; i < array.length; i++) {
+    for (let j = i; j < array.length; j++) {
+      console.log("i: " + i);
+      console.log("j: " + j);
+
+      if (array[j] < array[i]) {
+        temp = array[j];
+        array[j] = array[i];
+        array[i] = temp;
+      }
+    }
+  }
+  return array;
+}
+sortArray(input);
+
